@@ -26,7 +26,7 @@ def _pandoc_format(ext: str) -> str:
         "tex": "latex",
         "pdf": "pdf",
         "org": "org",
-        "xml": "html",
+        "xml": "plain",
         "json": "plain",
         "yaml": "plain",
         "yml": "plain",
