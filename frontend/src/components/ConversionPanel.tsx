@@ -2,8 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { convertFile, getDownloadUrl, getFormats, getJobStatus } from '../api/client'
 import type { FileInfo, JobStatus } from '../api/client'
 
+export interface CompletedJob {
+  jobId: string
+  outputFilename: string
+  targetFormat: string
+}
+
 interface Props {
   file: FileInfo | null
+  onJobCompleted?: (job: CompletedJob) => void
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -20,7 +27,7 @@ const STATUS_ICONS: Record<string, string> = {
   failed:     '❌',
 }
 
-export default function ConversionPanel({ file }: Props) {
+export default function ConversionPanel({ file, onJobCompleted }: Props) {
   const [formats, setFormats] = useState<string[]>([])
   const [selectedFormat, setSelectedFormat] = useState('')
   const [job, setJob] = useState<JobStatus | null>(null)
@@ -43,7 +50,7 @@ export default function ConversionPanel({ file }: Props) {
       })
       .catch(console.error)
       .finally(() => setLoadingFormats(false))
-  }, [file?.file_id])
+  }, [file])
 
   // Poll job status
   useEffect(() => {
@@ -57,6 +64,13 @@ export default function ConversionPanel({ file }: Props) {
         if (updated.status === 'completed' || updated.status === 'failed') {
           clearInterval(pollRef.current!)
           setConverting(false)
+          if (updated.status === 'completed' && onJobCompleted) {
+            onJobCompleted({
+              jobId: updated.job_id,
+              outputFilename: updated.output_filename ?? `converted.${selectedFormat}`,
+              targetFormat: selectedFormat,
+            })
+          }
         }
       } catch {
         clearInterval(pollRef.current!)

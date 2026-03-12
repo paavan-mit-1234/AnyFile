@@ -4,18 +4,13 @@ import type { FileInfo } from './api/client'
 import UploadPanel from './components/UploadPanel'
 import FileList from './components/FileList'
 import ConversionPanel from './components/ConversionPanel'
+import type { CompletedJob } from './components/ConversionPanel'
 import DownloadSection from './components/DownloadSection'
-
-interface CompletedJob {
-  jobId: string
-  outputFilename: string
-  targetFormat: string
-}
 
 export default function App() {
   const [files, setFiles] = useState<FileInfo[]>([])
   const [selectedFile, setSelectedFile] = useState<FileInfo | null>(null)
-  const [completedJobs] = useState<CompletedJob[]>([])
+  const [completedJobs, setCompletedJobs] = useState<CompletedJob[]>([])
 
   // Load existing files on mount
   useEffect(() => {
@@ -39,6 +34,13 @@ export default function App() {
     },
     [selectedFile],
   )
+
+  const handleJobCompleted = useCallback((job: CompletedJob) => {
+    setCompletedJobs((prev) => {
+      if (prev.some((j) => j.jobId === job.jobId)) return prev
+      return [job, ...prev]
+    })
+  }, [])
 
   return (
     <div style={appStyles.root}>
@@ -74,6 +76,7 @@ export default function App() {
           />
           <ConversionPanel
             file={selectedFile}
+            onJobCompleted={handleJobCompleted}
           />
         </div>
 

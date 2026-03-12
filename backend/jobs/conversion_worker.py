@@ -1,7 +1,9 @@
 import asyncio
+import os
 import uuid
 from datetime import datetime
 from enum import Enum
+from pathlib import Path
 from typing import Any, Callable, Optional
 
 
@@ -67,9 +69,6 @@ async def run_conversion(
         loop = asyncio.get_event_loop()
         # Run blocking conversion in thread pool to avoid blocking the event loop
         await loop.run_in_executor(None, converter_func, input_path, output_path)
-
-        import os
-        from pathlib import Path
 
         output_filename = Path(output_path).name
 
