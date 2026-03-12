@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 # Formats that pandoc handles well
-PANDOC_FORMATS = {"md", "markdown", "html", "htm", "txt", "rst", "latex", "tex", "rtf", "docx", "odt"}
+PANDOC_FORMATS = {"md", "markdown", "html", "htm", "txt", "rst", "latex", "tex", "rtf", "docx", "odt", "org", "xml", "json", "yaml", "yml", "log", "ini", "cfg"}
 
 # Formats that prefer LibreOffice
 LIBREOFFICE_FORMATS = {"doc", "docx", "odt", "ppt", "pptx", "odp", "pdf"}
@@ -25,6 +25,14 @@ def _pandoc_format(ext: str) -> str:
         "latex": "latex",
         "tex": "latex",
         "pdf": "pdf",
+        "org": "org",
+        "xml": "html",
+        "json": "plain",
+        "yaml": "plain",
+        "yml": "plain",
+        "log": "plain",
+        "ini": "plain",
+        "cfg": "plain",
     }
     return mapping.get(ext, ext)
 

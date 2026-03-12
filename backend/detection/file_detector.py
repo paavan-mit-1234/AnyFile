@@ -26,6 +26,8 @@ CATEGORY_FORMATS = {
     "document": {
         "pdf", "docx", "doc", "txt", "rtf", "md", "html", "htm",
         "odt", "pptx", "ppt", "odp",
+        "rst", "tex", "latex", "org", "xml", "json", "yaml", "yml",
+        "log", "ini", "cfg",
     },
     "spreadsheet": {"csv", "xlsx", "xls", "ods", "tsv"},
     "archive": {"zip", "tar", "gz", "bz2", "7z", "rar", "xz", "zst", "lz4", "br"},
@@ -105,6 +107,20 @@ class FileDetector:
             "tar": "application/x-tar",
             "gz": "application/gzip",
             "epub": "application/epub+zip",
+            "mobi": "application/x-mobipocket-ebook",
+            "azw3": "application/vnd.amazon.ebook",
+            "fb2": "application/x-fictionbook+xml",
+            "rst": "text/x-rst",
+            "tex": "application/x-tex",
+            "latex": "application/x-latex",
+            "org": "text/x-org",
+            "xml": "application/xml",
+            "json": "application/json",
+            "yaml": "text/yaml",
+            "yml": "text/yaml",
+            "log": "text/plain",
+            "ini": "text/plain",
+            "cfg": "text/plain",
         }
         return fallbacks.get(ext, "application/octet-stream")
 
@@ -135,7 +151,7 @@ class FileDetector:
             "image": ["jpg", "jpeg", "png", "bmp", "webp", "gif", "tiff", "ico"],
             "video": ["mp4", "mkv", "avi", "mov", "webm", "flv", "mpeg", "wmv", "m4v", "ogv"],
             "audio": ["mp3", "wav", "aac", "flac", "ogg", "m4a", "opus", "aiff"],
-            "document": ["pdf", "docx", "txt", "html", "odt", "rtf", "md"],
+            "document": ["pdf", "docx", "txt", "html", "odt", "rtf", "md", "rst", "tex", "org"],
             "spreadsheet": ["csv", "xlsx", "xls", "ods", "tsv"],
             "archive": ["zip", "tar", "gz", "bz2", "7z"],
             "ebook": ["epub", "mobi", "pdf", "azw3"],

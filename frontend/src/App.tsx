@@ -59,6 +59,7 @@ export default function App() {
             <span style={appStyles.pill}>Video</span>
             <span style={appStyles.pill}>Audio</span>
             <span style={appStyles.pill}>Docs</span>
+            <span style={appStyles.pill}>Ebooks</span>
             <span style={appStyles.pill}>Archives</span>
           </div>
         </div>
